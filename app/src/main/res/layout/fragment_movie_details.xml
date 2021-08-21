@@ -5,14 +5,14 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/movie_error_message"
+        android:id="@+id/movieErrorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ERROR! TRY AGAIN!"
+        android:text="@string/errorMessage"
         android:layout_centerInParent="true"/>
 
     <ProgressBar
-        android:id="@+id/movie_loading"
+        android:id="@+id/movieLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
@@ -30,63 +30,56 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:background="@android:color/holo_blue_light"
+            android:padding="10dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/holo_blue_light"
-                android:padding="10dp">
+                android:background="@android:color/holo_purple"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/image_movie"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="9"
+                    app:srcCompat="@drawable/movie"
+                    android:contentDescription="@string/imageContentDescription"/>
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_purple"
-                    android:orientation="vertical">
+                    android:id="@+id/genresLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/title"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:text="TITLE"
+                        android:text="@string/genres"
                         android:textColor="@android:color/holo_red_dark"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        android:textSize="13sp" />
 
-                    <ImageView
-                        android:id="@+id/image_movie"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="9"
-                        app:srcCompat="@drawable/ic_launcher_background" />
-
-                    <LinearLayout
-                        android:id="@+id/genres_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="GENRES: "
-                            android:textColor="@android:color/holo_red_dark"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/genres"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="13sp" />
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/genres"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -106,7 +99,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/overview_layout"
+                    android:id="@+id/overviewLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -114,7 +107,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="OVERVIEW: "
+                        android:text="@string/overview"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
@@ -126,7 +119,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/homepage_layout"
+                    android:id="@+id/homepageLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -135,7 +128,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HOMEPAGE: "
+                        android:text="@string/homepage"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
@@ -155,7 +148,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="STATUS: "
+                        android:text="@string/status"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
@@ -175,7 +168,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ADULT: "
+                        android:text="@string/adult"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
@@ -195,11 +188,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="RELEASE DATE: "
+                        android:text="@string/releaseDate"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
-                        android:id="@+id/release_date"
+                        android:id="@+id/releaseDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
@@ -215,11 +208,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="VOTE COUNT: "
+                        android:text="@string/voteCount"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
-                        android:id="@+id/vote_count"
+                        android:id="@+id/voteCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
@@ -235,11 +228,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="VOTE AVERAGE: "
+                        android:text="@string/voteAverage"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
-                        android:id="@+id/vote_average"
+                        android:id="@+id/voteAverage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
@@ -255,7 +248,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="POPULARITY: "
+                        android:text="@string/popularity"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
@@ -275,7 +268,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="REVENUE: "
+                        android:text="@string/revenue"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
@@ -287,7 +280,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/runtime_layout"
+                    android:id="@+id/runtimeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -296,7 +289,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="RUNTIME: "
+                        android:text="@string/runtime"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
@@ -316,11 +309,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ORIGINAL LANGUAGE: "
+                        android:text="@string/originalLanguage"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
-                        android:id="@+id/original_language"
+                        android:id="@+id/originalLanguage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
@@ -328,7 +321,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/spoken_languages_layout"
+                    android:id="@+id/spokenLanguagesLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -337,11 +330,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SPOKEN LANGUAGES: "
+                        android:text="@string/spokenLanguages"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
-                        android:id="@+id/spoken_languages"
+                        android:id="@+id/spokenLanguages"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
@@ -357,11 +350,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ORIGINAL TITLE: "
+                        android:text="@string/originalTitle"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
-                        android:id="@+id/original_title"
+                        android:id="@+id/originalTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
@@ -369,7 +362,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/tagline_layout"
+                    android:id="@+id/taglineLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -378,7 +371,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TAGLINE: "
+                        android:text="@string/tagline"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
@@ -390,7 +383,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/production_countries_layout"
+                    android:id="@+id/productionCountriesLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -399,11 +392,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PRODUCTION COUNTRIES: "
+                        android:text="@string/productionCountries"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
-                        android:id="@+id/production_countries"
+                        android:id="@+id/productionCountries"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
@@ -411,7 +404,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/production_companies_layout"
+                    android:id="@+id/productionCompaniesLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -420,11 +413,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PRODUCTION COMPANIES: "
+                        android:text="@string/productionCompanies"
                         android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
-                        android:id="@+id/production_companies"
+                        android:id="@+id/productionCompanies"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />

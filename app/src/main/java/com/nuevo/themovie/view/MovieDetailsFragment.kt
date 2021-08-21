@@ -5,31 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.nuevo.themovie.R
+import com.nuevo.themovie.databinding.FragmentMovieDetailsBinding
 import com.nuevo.themovie.util.doPlaceHolder
 import com.nuevo.themovie.util.downloadImage
 import com.nuevo.themovie.viewmodel.MovieViewModel
-import kotlinx.android.synthetic.main.fragment_movie_details.*
-import kotlinx.android.synthetic.main.fragment_movie_list.*
 
 class MovieDetailsFragment : Fragment() {
 
     private var movieID = 0
 
+    private lateinit var binding: FragmentMovieDetailsBinding
     private lateinit var viewModel: MovieViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie_details, container, false)
+    ): View {
+        binding = FragmentMovieDetailsBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,93 +40,93 @@ class MovieDetailsFragment : Fragment() {
         observeLiveData()
     }
 
-    fun observeLiveData() {
-        viewModel.movies.observe(viewLifecycleOwner, Observer{
-            title.text = it.title
-            if(it.toStringGenres().equals("")) {
-                genres_layout.visibility = View.GONE
+    private fun observeLiveData() {
+        viewModel.movies.observe(viewLifecycleOwner, {
+            binding.title.text = it.title
+            if(it.toStringGenres() == "") {
+                binding.genresLayout.visibility = View.GONE
             } else {
-                genres_layout.visibility = View.VISIBLE
-                genres.text = it.toStringGenres()
+                binding.genresLayout.visibility = View.VISIBLE
+                binding.genres.text = it.toStringGenres()
             }
-            if(it.overview==null || it.overview.equals("")) {
-                overview_layout.visibility = View.GONE
+            if(it.overview==null || it.overview == "") {
+                binding.overviewLayout.visibility = View.GONE
             } else {
-                overview_layout.visibility = View.VISIBLE
-                overview.text = it.overview
+                binding.overviewLayout.visibility = View.VISIBLE
+                binding.overview.text = it.overview
             }
-            if(it.homepage==null || it.homepage.equals("")) {
-                homepage_layout.visibility = View.GONE
+            if(it.homepage==null || it.homepage == "") {
+                binding.homepageLayout.visibility = View.GONE
             } else {
-                homepage_layout.visibility = View.VISIBLE
-                homepage.text = it.homepage
+                binding.homepageLayout.visibility = View.VISIBLE
+                binding.homepage.text = it.homepage
             }
-            status.text = it.status
+            binding.status.text = it.status
             if(it.adult==null || it.adult) {
-                adult.text = "Yes"
+                binding.adult.setText(R.string.y)
             } else {
-                adult.text = "No"
+                binding.adult.setText(R.string.n)
             }
-            release_date.text = it.release_date
-            vote_count.text = it.vote_count.toString()
-            vote_average.text = it.vote_average.toString()
-            popularity.text = it.popularity.toString()
-            revenue.text = it.revenue.toString()
+            binding.releaseDate.text = it.release_date
+            binding.voteCount.text = it.vote_count.toString()
+            binding.voteAverage.text = it.vote_average.toString()
+            binding.popularity.text = it.popularity.toString()
+            binding.revenue.text = it.revenue.toString()
             if(it.runtime==null || it.runtime==0) {
-                runtime_layout.visibility = View.GONE
+                binding.runtimeLayout.visibility = View.GONE
             } else {
-                runtime_layout.visibility = View.VISIBLE
-                runtime.text = it.runtime.toString()
+                binding.runtimeLayout.visibility = View.VISIBLE
+                binding.runtime.text = it.runtime.toString()
             }
-            original_language.text = it.original_language
-            if(it.toStringSpokenLanguages().equals("")) {
-                spoken_languages_layout.visibility = View.GONE
+            binding.originalLanguage.text = it.original_language
+            if(it.toStringSpokenLanguages() == "") {
+                binding.spokenLanguagesLayout.visibility = View.GONE
             } else {
-                spoken_languages_layout.visibility = View.VISIBLE
-                spoken_languages.text = it.toStringSpokenLanguages()
+                binding.spokenLanguagesLayout.visibility = View.VISIBLE
+                binding.spokenLanguages.text = it.toStringSpokenLanguages()
             }
-            original_title.text = it.original_title
-            if(it.tagline==null || it.tagline.equals("")) {
-                tagline_layout.visibility = View.GONE
+            binding.originalTitle.text = it.original_title
+            if(it.tagline==null || it.tagline == "") {
+                binding.taglineLayout.visibility = View.GONE
             } else {
-                tagline_layout.visibility = View.VISIBLE
-                tagline.text = it.tagline
+                binding.taglineLayout.visibility = View.VISIBLE
+                binding.tagline.text = it.tagline
             }
-            if(it.toStringProductionCountries().equals("")) {
-                production_countries_layout.visibility = View.GONE
+            if(it.toStringProductionCountries() == "") {
+                binding.productionCountriesLayout.visibility = View.GONE
             } else {
-                production_countries_layout.visibility = View.VISIBLE
-                production_countries.text = it.toStringProductionCountries()
+                binding.productionCountriesLayout.visibility = View.VISIBLE
+                binding.productionCountries.text = it.toStringProductionCountries()
             }
-            if(it.toStringProductionCompanies().equals("")) {
-                production_companies_layout.visibility = View.GONE
+            if(it.toStringProductionCompanies() == "") {
+                binding.productionCompaniesLayout.visibility = View.GONE
             } else {
-                production_companies_layout.visibility = View.VISIBLE
-                production_companies.text = it.toStringProductionCompanies()
+                binding.productionCompaniesLayout.visibility = View.VISIBLE
+                binding.productionCompanies.text = it.toStringProductionCompanies()
             }
-            image_movie.downloadImage("https://image.tmdb.org/t/p/w500" + it.backdrop_path, doPlaceHolder(requireContext()))
-            linearLayout.visibility = View.VISIBLE
+            binding.imageMovie.downloadImage("https://image.tmdb.org/t/p/w500" + it.backdrop_path, doPlaceHolder(requireContext()))
+            binding.linearLayout.visibility = View.VISIBLE
         })
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { error ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, { error ->
             error?.let {
                 if(it) {
-                    movie_error_message.visibility = View.VISIBLE
-                    linearLayout.visibility = View.GONE
+                    binding.movieErrorMessage.visibility = View.VISIBLE
+                    binding.movieLoading.visibility = View.GONE
                 } else {
-                    movie_error_message.visibility = View.GONE
+                    binding.movieErrorMessage.visibility = View.GONE
                 }
             }
         })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer { movieLoad ->
+        viewModel.loading.observe(viewLifecycleOwner, { movieLoad ->
             movieLoad?.let {
                 if(it) {
-                    movie_error_message.visibility = View.GONE
-                    linearLayout.visibility = View.GONE
-                    movie_loading.visibility = View.VISIBLE
+                    binding.movieErrorMessage.visibility = View.GONE
+                    binding.linearLayout.visibility = View.GONE
+                    binding.movieLoading.visibility = View.VISIBLE
                 } else {
-                    movie_loading.visibility = View.GONE
+                    binding.movieLoading.visibility = View.GONE
                 }
             }
         })

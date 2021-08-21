@@ -2,4 +2,27 @@
     <string name="app_name">TheMovie</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="topRated">TOP RATED</string>
+    <string name="popular">POPULARITY</string>
+    <string name="errorMessage">ERROR! TRY AGAIN!</string>
+    <string name="imageContentDescription">MOVIE IMAGE</string>
+    <string name="genres">GENRES: </string>
+    <string name="overview">OVERVIEW: </string>
+    <string name="homepage">HOMEPAGE: </string>
+    <string name="status">STATUS: </string>
+    <string name="adult">ADULT: </string>
+    <string name="releaseDate">RELEASE DATE: </string>
+    <string name="voteCount">VOTE COUNT: </string>
+    <string name="voteAverage">VOTE AVERAGE: </string>
+    <string name="popularity">POPULARITY: </string>
+    <string name="revenue">REVENUE: </string>
+    <string name="runtime">RUNTIME: </string>
+    <string name="originalLanguage">ORIGINAL LANGUAGE: </string>
+    <string name="spokenLanguages">SPOKEN LANGUAGES: </string>
+    <string name="originalTitle">ORIGINAL TITLE: </string>
+    <string name="productionCompanies">PRODUCTION COMPANIES</string>
+    <string name="tagline">TAGLINE: </string>
+    <string name="productionCountries">PRODUCTION COUNTRIES: </string>
+    <string name="y">Yes</string>
+    <string name="n">No</string>
 </resources>

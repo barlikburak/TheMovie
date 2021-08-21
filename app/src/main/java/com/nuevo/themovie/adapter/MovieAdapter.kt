@@ -6,42 +6,44 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.navigation.Navigation
-import com.nuevo.themovie.R
+import com.nuevo.themovie.databinding.RowItemBinding
 import com.nuevo.themovie.model.Movie
 import com.nuevo.themovie.util.doPlaceHolder
 import com.nuevo.themovie.util.downloadImage
 import com.nuevo.themovie.view.MovieListFragmentDirections
-import kotlinx.android.synthetic.main.row_item.view.*
 
-class MovieAdapter(val context: Context, val movieList: ArrayList<Movie>, val typeOfListing: String) : BaseAdapter() {
+class MovieAdapter(private val context: Context, private val movieList: ArrayList<Movie>, private val typeOfList: String) : BaseAdapter() {
+
+    private lateinit var binding: RowItemBinding
 
     override fun getCount(): Int {
         return movieList.size
     }
 
     override fun getItem(p0: Int): Any {
-        return movieList.get(p0)
+        return movieList[p0]
     }
 
     override fun getItemId(p0: Int): Long {
         return p0.toLong()
     }
 
-    override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View? {
-        val movie = this.movieList.get(p0)
+    override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
+        val movie = this.movieList[p0]
 
-        var inflator = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var movieView = inflator.inflate(R.layout.row_item, null)
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        binding = RowItemBinding.inflate(inflater)
+        val movieView =  binding.root
 
-        movieView.movie_image.downloadImage("https://image.tmdb.org/t/p/w500" + movie.backdrop_path, doPlaceHolder(context))
-        movieView.movie_title.setText(movie.title)
+        binding.movieImage.downloadImage("https://image.tmdb.org/t/p/w500" + movie.backdrop_path, doPlaceHolder(context))
+        binding.movieTitle.text = movie.title
 
-        movieView.movie_release_date.setText(movie.release_date)
+        binding.movieReleaseDate.text = movie.release_date
 
-        if(typeOfListing.equals("top_rated")) {
-            movieView.movie_type_of_listing.setText(movie.vote_average.toString())
+        if(typeOfList == "top_rated") {
+            binding.movieTypeOfListing.text = movie.vote_average.toString()
         } else {
-            movieView.movie_type_of_listing.setText(movie.popularity.toString())
+            binding.movieTypeOfListing.text = movie.popularity.toString()
         }
 
         movieView.setOnClickListener {
@@ -49,7 +51,7 @@ class MovieAdapter(val context: Context, val movieList: ArrayList<Movie>, val ty
             Navigation.findNavController(it).navigate(action)
         }
 
-        return movieView;
+        return movieView
     }
 
 }
