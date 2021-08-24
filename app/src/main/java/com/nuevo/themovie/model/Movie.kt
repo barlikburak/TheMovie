@@ -58,8 +58,8 @@ data class Movie(
     @SerializedName("tagline")
     val tagline:String?
 ){
-    fun toStringGenres(): String {
-        var string: String = ""
+    fun genresToString(): String {
+        var string = ""
         genres?.let {
             for(index in it.indices){
                 string += it[index].name
@@ -71,8 +71,8 @@ data class Movie(
         return string
     }
 
-    fun toStringSpokenLanguages(): String {
-        var string: String = ""
+    fun spokenLanguagesToString(): String {
+        var string = ""
         spoken_languages?.let {
             for(index in it.indices){
                 string += it[index].name
@@ -84,8 +84,8 @@ data class Movie(
         return string
     }
 
-    fun toStringProductionCountries(): String {
-        var string: String = ""
+    fun productionCountriesToString(): String {
+        var string = ""
         production_countries?.let {
             for(index in it.indices){
                 string += it[index].name
@@ -97,8 +97,8 @@ data class Movie(
         return string
     }
 
-    fun toStringProductionCompanies(): String {
-        var string: String = ""
+    fun productionCompaniesToString(): String {
+        var string = ""
         production_companies?.let {
             for(index in it.indices){
                 string += it[index].toString()

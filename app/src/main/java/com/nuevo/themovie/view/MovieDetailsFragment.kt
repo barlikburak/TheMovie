@@ -5,17 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
-import com.nuevo.themovie.R
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.nuevo.themovie.databinding.FragmentMovieDetailsBinding
+import com.nuevo.themovie.model.Movie
 import com.nuevo.themovie.util.doPlaceHolder
 import com.nuevo.themovie.util.downloadImage
 import com.nuevo.themovie.viewmodel.MovieViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
 
     private var movieID = 0
-
     private lateinit var binding: FragmentMovieDetailsBinding
     private lateinit var viewModel: MovieViewModel
 
@@ -34,102 +37,70 @@ class MovieDetailsFragment : Fragment() {
             movieID = MovieDetailsFragmentArgs.fromBundle(it).movieId
         }
 
-        viewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        viewModel.refreshData(false, movieID.toString())
+        viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+        viewModel.loadListOfData(false, movieID.toString())
 
         observeLiveData()
     }
 
     private fun observeLiveData() {
-        viewModel.movies.observe(viewLifecycleOwner, {
-            binding.title.text = it.title
-            if(it.toStringGenres() == "") {
-                binding.genresLayout.visibility = View.GONE
-            } else {
-                binding.genresLayout.visibility = View.VISIBLE
-                binding.genres.text = it.toStringGenres()
-            }
-            if(it.overview==null || it.overview == "") {
-                binding.overviewLayout.visibility = View.GONE
-            } else {
-                binding.overviewLayout.visibility = View.VISIBLE
-                binding.overview.text = it.overview
-            }
-            if(it.homepage==null || it.homepage == "") {
-                binding.homepageLayout.visibility = View.GONE
-            } else {
-                binding.homepageLayout.visibility = View.VISIBLE
-                binding.homepage.text = it.homepage
-            }
-            binding.status.text = it.status
-            if(it.adult==null || it.adult) {
-                binding.adult.setText(R.string.y)
-            } else {
-                binding.adult.setText(R.string.n)
-            }
-            binding.releaseDate.text = it.release_date
-            binding.voteCount.text = it.vote_count.toString()
-            binding.voteAverage.text = it.vote_average.toString()
-            binding.popularity.text = it.popularity.toString()
-            binding.revenue.text = it.revenue.toString()
-            if(it.runtime==null || it.runtime==0) {
-                binding.runtimeLayout.visibility = View.GONE
-            } else {
-                binding.runtimeLayout.visibility = View.VISIBLE
-                binding.runtime.text = it.runtime.toString()
-            }
-            binding.originalLanguage.text = it.original_language
-            if(it.toStringSpokenLanguages() == "") {
-                binding.spokenLanguagesLayout.visibility = View.GONE
-            } else {
-                binding.spokenLanguagesLayout.visibility = View.VISIBLE
-                binding.spokenLanguages.text = it.toStringSpokenLanguages()
-            }
-            binding.originalTitle.text = it.original_title
-            if(it.tagline==null || it.tagline == "") {
-                binding.taglineLayout.visibility = View.GONE
-            } else {
-                binding.taglineLayout.visibility = View.VISIBLE
-                binding.tagline.text = it.tagline
-            }
-            if(it.toStringProductionCountries() == "") {
-                binding.productionCountriesLayout.visibility = View.GONE
-            } else {
-                binding.productionCountriesLayout.visibility = View.VISIBLE
-                binding.productionCountries.text = it.toStringProductionCountries()
-            }
-            if(it.toStringProductionCompanies() == "") {
-                binding.productionCompaniesLayout.visibility = View.GONE
-            } else {
-                binding.productionCompaniesLayout.visibility = View.VISIBLE
-                binding.productionCompanies.text = it.toStringProductionCompanies()
-            }
-            binding.imageMovie.downloadImage("https://image.tmdb.org/t/p/w500" + it.backdrop_path, doPlaceHolder(requireContext()))
+        viewModel.getMovie().observe(viewLifecycleOwner, {
+            assignData(it)
             binding.linearLayout.visibility = View.VISIBLE
         })
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, { error ->
+        viewModel.getErrorMessage().observe(viewLifecycleOwner, { error ->
             error?.let {
                 if(it) {
                     binding.movieErrorMessage.visibility = View.VISIBLE
                     binding.movieLoading.visibility = View.GONE
-                } else {
+                } else
                     binding.movieErrorMessage.visibility = View.GONE
-                }
             }
         })
 
-        viewModel.loading.observe(viewLifecycleOwner, { movieLoad ->
+        viewModel.getLoading().observe(viewLifecycleOwner, { movieLoad ->
             movieLoad?.let {
                 if(it) {
                     binding.movieErrorMessage.visibility = View.GONE
                     binding.linearLayout.visibility = View.GONE
                     binding.movieLoading.visibility = View.VISIBLE
-                } else {
+                } else
                     binding.movieLoading.visibility = View.GONE
-                }
             }
         })
+    }
+
+    private fun assignData(it: Movie) {
+        viewVisibility(layout = null, data = it.title, textView = binding.title)
+        viewVisibility(layout = binding.genresLayout, data = it.genresToString(), textView = binding.genres)
+        viewVisibility(layout = binding.overviewLayout, data = it.overview, textView = binding.overview)
+        viewVisibility(layout = binding.homepageLayout, data = it.homepage, textView = binding.homepage)
+        viewVisibility(layout = null, data = it.status, textView =binding.status)
+        viewVisibility(layout = null, data = if(it.adult!=null && it.adult) "Yes" else "No", textView = binding.adult)
+        viewVisibility(layout = null, data = it.release_date, textView = binding.releaseDate)
+        viewVisibility(layout = null, data = it.vote_count, textView = binding.voteCount)
+        viewVisibility(layout = null, data = it.vote_average, textView = binding.voteAverage)
+        viewVisibility(layout = null, data = it.popularity, textView = binding.popularity)
+        viewVisibility(layout = null, data = it.revenue, textView = binding.revenue)
+        viewVisibility(layout = binding.runtimeLayout, data = it.runtime, textView = binding.runtime)
+        viewVisibility(layout = null, data = it.original_language, textView = binding.originalLanguage)
+        viewVisibility(layout = binding.spokenLanguagesLayout, data = it.spokenLanguagesToString(), textView = binding.spokenLanguages)
+        viewVisibility(layout = null, data = it.original_title, textView = binding.originalTitle)
+        viewVisibility(layout = binding.taglineLayout, data = it.tagline, textView = binding.tagline)
+        viewVisibility(layout = binding.productionCountriesLayout, data = it.productionCountriesToString(), textView = binding.productionCountries)
+        viewVisibility(layout = binding.productionCompaniesLayout, data = it.productionCompaniesToString(), textView = binding.productionCompanies)
+        viewVisibility(layout = null, data = it.backdrop_path, imageView = binding.imageMovie)
+    }
+
+    private fun viewVisibility(layout: View?, data: Any?, textView: TextView? = null, imageView: ImageView? = null) {
+        if(textView != null) {
+            if (data == null || data.toString() == "" || data.toString() == "0")   layout?.visibility = View.GONE
+            else {
+                layout?.visibility = View.VISIBLE
+                textView.text = data.toString()
+            }
+        } else imageView?.downloadImage(data.toString(), doPlaceHolder(requireContext()))
     }
 
 }

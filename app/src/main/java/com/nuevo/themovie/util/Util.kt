@@ -7,9 +7,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.nuevo.themovie.R
 
+private const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+
 fun ImageView.downloadImage(url: String?, placeholder: CircularProgressDrawable) {
     val options = RequestOptions().placeholder(placeholder).error(R.drawable.movie)
-    Glide.with(context).setDefaultRequestOptions(options).load(url).into(this)
+    Glide.with(context).setDefaultRequestOptions(options).load(IMAGE_URL+ url).into(this)
 }
 
 fun doPlaceHolder(context: Context) : CircularProgressDrawable {

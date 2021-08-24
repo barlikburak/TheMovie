@@ -35,16 +35,7 @@ class MovieAdapter(private val context: Context, private val movieList: ArrayLis
         binding = RowItemBinding.inflate(inflater)
         val movieView =  binding.root
 
-        binding.movieImage.downloadImage("https://image.tmdb.org/t/p/w500" + movie.backdrop_path, doPlaceHolder(context))
-        binding.movieTitle.text = movie.title
-
-        binding.movieReleaseDate.text = movie.release_date
-
-        if(typeOfList == "top_rated") {
-            binding.movieTypeOfListing.text = movie.vote_average.toString()
-        } else {
-            binding.movieTypeOfListing.text = movie.popularity.toString()
-        }
+        assignData(movie)
 
         movieView.setOnClickListener {
             val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movie.id!!)
@@ -52,6 +43,16 @@ class MovieAdapter(private val context: Context, private val movieList: ArrayLis
         }
 
         return movieView
+    }
+
+    private fun assignData(movie: Movie) {
+        binding.movieImage.downloadImage(movie.backdrop_path, doPlaceHolder(context))
+
+        binding.movieTitle.text = movie.title
+        binding.movieReleaseDate.text = movie.release_date
+        binding.movieTypeOfListing.text =
+            if(typeOfList != "POPULARITY") movie.vote_average.toString()
+            else movie.popularity.toString()
     }
 
 }

@@ -7,4 +7,4 @@ data class ProductionCountries(
     val iso_3166_1:String?,
     @SerializedName("name")
     val name:String
-) {}
+)

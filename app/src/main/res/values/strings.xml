@@ -23,6 +23,4 @@
     <string name="productionCompanies">PRODUCTION COMPANIES</string>
     <string name="tagline">TAGLINE: </string>
     <string name="productionCountries">PRODUCTION COUNTRIES: </string>
-    <string name="y">Yes</string>
-    <string name="n">No</string>
 </resources>
